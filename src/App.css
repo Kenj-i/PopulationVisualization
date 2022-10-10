@@ -16,9 +16,10 @@ button {
   cursor: pointer;
 }
 header {
+  --text: black;
   --button: rgb(200, 200, 200);
   --shadow: rgb(140, 140, 140);
-  color: black;
+  color: var(--text);
   padding: 0 5%;
   width: 90%;
   height: 20px;
@@ -29,7 +30,7 @@ header {
 }
 
 header.darkmode {
-  color: white;
+  --text: white;
   background-color: rgba(33, 33, 52, 0.7);
 }
 header.darkmode .cbutton {
@@ -127,6 +128,13 @@ input[type="text"] {
   padding: 0 5%;
   width: 100%;
   border: none;
+  background-color: transparent;
+  border: none;
+  border-bottom-style: solid;
+  color: var(--text);
+}
+input[type="text"]:focus {
+  outline: none;
 }
 .countrySymbol {
   display: block;
