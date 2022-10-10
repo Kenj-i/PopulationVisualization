@@ -4,27 +4,33 @@ import './App.css';
 import Header from './Header'
 import ThreeScene from './three/ThreeScene';
 
-export const HeightContext = React.createContext()
+export const Context = React.createContext()
 
 function App() {
-  const [height, setHeight] = useState({
-    firstHeight: 1,
-    secondHeight: 1
+  const [state, setState] = useState({
+    height: {
+      firstHeight: 1,
+      secondHeight: 1
+    },
+    darkmode: true
   })
 
-  const settingHeight = (firstHeight, secondHeight) => {
-    setHeight({
-      firstHeight: firstHeight,
-      secondHeight: secondHeight
+  const settingState = (firstHeight, secondHeight, darkmode) => {
+    setState({
+      height: {
+        firstHeight: firstHeight,
+        secondHeight: secondHeight
+      },
+      darkmode: darkmode
     })
   }
 
   return (
     <div>
-      <HeightContext.Provider value={height} >
-        <Header setHeight={settingHeight} />
+      <Context.Provider value={state} >
+        <Header setState={settingState} />
         <ThreeScene />
-      </HeightContext.Provider>
+      </Context.Provider>
     </div>
   );
 }

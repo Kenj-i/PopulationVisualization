@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { Context } from "./App";
 
-function Header({ setHeight }) {
+function Header({ setState }) {
+    const state = useContext(Context)
     const [countries, setCountries] = useState(null)
     const [year, setYear] = useState(2018)
     const [firstCountry, setFirstCountry] = useState(null,)
     const [secondCountry, setSecondCountry] = useState(null)
+    const [extended, setExtended] = useState(true)
 
     useEffect(() => {
         fetch('https://countriesnow.space/api/v0.1/countries/population')
@@ -46,39 +49,51 @@ function Header({ setHeight }) {
             firstPopulation = 5 * (firstPopulation / secondPopulation)
             secondPopulation = 5
         }
-        setHeight(firstPopulation, secondPopulation)
+        setState(firstPopulation, secondPopulation, state.darkmode)
     }
 
     return (
-        <header className="darkmode">
-            <div className="content">
-                <section className="left-content">
-                    <form onSubmit={setPopulation}>
-                        <div className="wrap-input">
-                            <span className="countrySymbol first" />
-                            <input required type="text" list="countries" placeholder="First Country..." onChange={e => setFirstCountry(e.target.value)} />
+        <header className={`${extended ? "extended" : ""} ${state.darkmode ? "darkmode" : ""}`}>
+            <div className="wrap-extend">
+                <button onClick={
+                    () => {
+                        setExtended(prevExtended => !prevExtended)
+                    }
+                } id="extend" className="cbutton extend-button"><i className="bi bi-arrow-bar-down"></i></button>
+            </div>
+            <div className="overflow-header">
+                <div className="content">
+                    <section className="left-content">
+                        <form onSubmit={setPopulation}>
+                            <div className="wrap-input">
+                                <span className="countrySymbol first" />
+                                <input required type="text" list="countries" placeholder="First Country..." onChange={e => setFirstCountry(e.target.value)} />
+                            </div>
+                            <div className="wrap-input">
+                                <span className="countrySymbol second" />
+                                <input required type="text" list="countries" placeholder="Second Country..." onChange={e => setSecondCountry(e.target.value)} />                            
+                            </div>
+                            <datalist id="countries">{countries && showOptions()}</datalist>
+                            <button className="cbutton"><i className="bi bi-search" /></button>
+                        </form>
+                    </section>
+                    <section className="middle-content">
+                        <div style={{display: "flex"}}>
+                            <h3>Year {year}:</h3>
+                            <input id="year" type="range" min="1960" max="2018" onChange={e => setYear(e.target.value)} value={year} />
                         </div>
-                        <div className="wrap-input">
-                            <span className="countrySymbol second" />
-                            <input required type="text" list="countries" placeholder="Second Country..." onChange={e => setSecondCountry(e.target.value)} />                            
-                        </div>
-                        <datalist id="countries">{countries && showOptions()}</datalist>
-                        <button className="cbutton"><i className="bi bi-search" /></button>
-                    </form>
-                </section>
-                <section className="middle-content">
-                    <div style={{display: "flex"}}>
-                        <h3>Year {year}:</h3>
-                        <input id="year" type="range" min="1960" max="2018" onChange={e => setYear(e.target.value)} value={year} />
-                    </div>
-                    <button id="extend" className="cbutton extend-button"><i className="bi bi-arrow-bar-down"></i></button>
-                </section>
-                <section className="right-content">
-                    <button id="darkmode" className="cbutton darkmode-button">
-                        <i id="sun" className="symbol bi bi-sun"></i>
-                        <i id="moon" className="symbol bi bi-moon active"></i>
-                    </button>
-                </section>
+                    </section>
+                    <section className="right-content">
+                        <button onClick={
+                            () => {
+                                setState(state.height.firstHeight, state.height.secondHeight, !state.darkmode)
+                            }
+                        } className="cbutton darkmode-button">
+                            <i id="sun" className={`symbol bi bi-sun ${!state.darkmode ? "active" : ""}`}></i>
+                            <i id="moon" className={`symbol bi bi-moon ${state.darkmode ? "active" : ""}`}></i>
+                        </button>
+                    </section>
+                </div>
             </div>
         </header>
     )

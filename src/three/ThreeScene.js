@@ -1,20 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import * as THREE from 'three'
-import { HeightContext } from "../App";
+import { Context } from "../App";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 
 function ThreeScene() {
-    const height = useContext(HeightContext)
+    const state = useContext(Context)
     let controls;
     const [scene] = useState(new THREE.Scene())
     const [camera] = useState(new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000))
     const [renderer] = useState(new THREE.WebGLRenderer({ antialias: true }))
     const [firstCountry] = useState(new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshLambertMaterial({color: 0xf4142e})))
     const [secondCountry] = useState(new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshLambertMaterial({color: 0x0040ff})))
-    const [ground] = useState(new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshLambertMaterial( {color: 0xffffff} )))
+    const [ground] = useState(new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshLambertMaterial({color: 0xffffff})))
 
     useEffect(() => {
-        scene.background = new THREE.Color(0xffffff);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -31,7 +30,7 @@ function ThreeScene() {
         controls.minDistance = 2;
         controls.maxDistance = 200;
         controls.maxPolarAngle = (Math.PI / 2) - 0.0304;
-    
+
         // Adding Objects
         ground.rotation.x = Math.PI / -2;
         ground.receiveShadow = true;
@@ -70,15 +69,31 @@ function ThreeScene() {
 
     useEffect(() => {
         animate()
-    }, [height])
+    }, [state.height.firstHeight, state.height.secondHeight])
+
+    useEffect(() => {
+        if (state.darkmode) setDarkmode()
+        if (!state.darkmode) setLightmode()
+    }, [state.darkmode])
 
     const animate = () => {
         if (numb < 1) requestAnimationFrame(animate)
-        firstCountry.scale.lerp(new THREE.Vector3(1, height.firstHeight, 1), numb)
-        firstCountry.position.lerp(new THREE.Vector3(-1, height.firstHeight / 2, 0), numb)
-        secondCountry.scale.lerp(new THREE.Vector3(1, height.secondHeight, 1), numb)
-        secondCountry.position.lerp(new THREE.Vector3(1, height.secondHeight / 2, 0), numb)
+        firstCountry.scale.lerp(new THREE.Vector3(1, state.height.firstHeight, 1), numb)
+        firstCountry.position.lerp(new THREE.Vector3(-1, state.height.firstHeight / 2, 0), numb)
+        secondCountry.scale.lerp(new THREE.Vector3(1, state.height.secondHeight, 1), numb)
+        secondCountry.position.lerp(new THREE.Vector3(1, state.height.secondHeight / 2, 0), numb)
         numb += 0.01
+        render()
+    }
+
+    const setDarkmode = () => {
+        scene.background = new THREE.Color(0x1c1c2e)
+        ground.material.color.setHex(0x181829)
+        render()
+    }
+    const setLightmode = () => {
+        scene.background = new THREE.Color(0xffffff);
+        ground.material.color.setHex(0xffffff)
         render()
     }
 
