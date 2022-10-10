@@ -1,38 +1,147 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* HEADER */
+button {
+  cursor: pointer;
+}
+header {
+  position: fixed;
+  z-index: 1;
+  width: 90%;
+  height: 100px;
+  padding: 0 5%;
+  background-color: rgba(200, 200, 200, 0.5);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: 0.2s ease;
+}
+header.darkmode {
+  background-color: rgba(33, 33, 52, 0.7);
+}
+header.darkmode .cbutton {
+  background-color: rgb(42, 25, 87);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.content {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+section {
+  width: 100%;
+  display: flex;
+}
+.left-content {
+  justify-content: flex-start;
+}
+.right-content {
+  justify-content: flex-end;
+}
+.middle-content {
+  justify-content: center;
+}
+.cbutton {
+  background-color: rgb(200, 200, 200);
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  transition: 0.2s ease;
+}
+.darkmode-button {
+  width: 50px;
+  aspect-ratio: 1;
+  font-size: 18px;
+  overflow: hidden;
+  translate: -100% -50%;
+  position: absolute;
+}
+.symbol {
+  aspect-ratio: 1;
+  transition: 0.3s ease;
+  position: inherit;
+}
+.bi-sun {
+  translate: 0px 50px;
+}
+.bi-moon {
+  translate: 0px -50px;
+}
+.active {
+  translate: 0px 0px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* FORM */
+form {
+  --formHeight: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5%;
+}
+form * {
+  font-size: 15px;
+}
+.wrap-input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 3%;
+}
+input[type="text"] {
+  height: var(--formHeight);
+  padding: 0 5%;
+  width: 100%;
+  border: none;
+}
+.countrySymbol {
+  display: block;
+  width: 20px;
+  aspect-ratio: 1;
+  background-color: black;
+  border-radius: 50%;
+  transition: 0.2s ease;
+}
+
+.wrap-input:focus-within .countrySymbol {
+  border-radius: 0%;
+}
+
+.first {
+  background-color: #f4142e;
+}
+.second {
+  background-color: #0040ff;
+}
+
+form button {
+  height: var(--formHeight);
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+}
+
+/* MIDDLE SECTION */
+.extend-button {
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  bottom: 0px;
+  font-size: 18px;
+  translate: 0px 50%;
 }
