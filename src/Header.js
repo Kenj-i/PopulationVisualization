@@ -12,9 +12,7 @@ function Header({ setState }) {
     useEffect(() => {
         fetch('https://countriesnow.space/api/v0.1/countries/population')
             .then(response => response.json())
-            .then(response => {
-                setCountries(response)
-            })
+            .then(response => setCountries(response))
             .catch(err => console.error(err));
     }, [])
 
@@ -59,7 +57,7 @@ function Header({ setState }) {
                     () => {
                         setExtended(prevExtended => !prevExtended)
                     }
-                } id="extend" className="cbutton extend-button"><i className="bi bi-arrow-bar-down"></i></button>
+                } title="Close and open the header" className="cbutton extend-button"><i className="bi bi-arrow-bar-down"></i></button>
             </div>
             <div className="overflow-header">
                 <div className="content">
@@ -78,9 +76,9 @@ function Header({ setState }) {
                         </form>
                     </section>
                     <section className="middle-content">
-                        <div style={{display: "flex"}}>
+                        <div className="wrap-middle">
                             <h3>Year {year}:</h3>
-                            <input id="year" type="range" min="1960" max="2018" onChange={e => setYear(e.target.value)} value={year} />
+                            <input type="range" min="1960" max="2018" onChange={e => setYear(e.target.value)} value={year} />
                         </div>
                     </section>
                     <section className="right-content">
@@ -89,8 +87,8 @@ function Header({ setState }) {
                                 setState(state.height.firstHeight, state.height.secondHeight, !state.darkmode)
                             }
                         } className="cbutton darkmode-button">
-                            <i id="sun" className={`symbol bi bi-sun ${!state.darkmode ? "active" : ""}`}></i>
-                            <i id="moon" className={`symbol bi bi-moon ${state.darkmode ? "active" : ""}`}></i>
+                            <i className={`symbol bi bi-sun ${!state.darkmode ? "active" : ""}`}></i>
+                            <i className={`symbol bi bi-moon ${state.darkmode ? "active" : ""}`}></i>
                         </button>
                     </section>
                 </div>

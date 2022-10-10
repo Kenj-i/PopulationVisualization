@@ -15,29 +15,34 @@ code {
 button {
   cursor: pointer;
 }
+h3 {
+  margin: 0;
+}
+
 header {
+  --bg: rgba(200, 200, 200, 0.5);
   --text: black;
   --button: rgb(200, 200, 200);
   --shadow: rgb(140, 140, 140);
-  color: var(--text);
   padding: 0 5%;
   width: 90%;
   height: 20px;
   position: fixed;
-  background-color: rgba(200, 200, 200, 0.5);
+  background-color: var(--bg);
   backdrop-filter: blur(10px);
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: var(--shadow);
   transition: 0.2s ease;
+}
+header * {
+  color: var(--text);
 }
 
 header.darkmode {
   --text: white;
-  background-color: rgba(33, 33, 52, 0.7);
-}
-header.darkmode .cbutton {
+  --bg: rgba(33, 33, 52, 0.7);
   --button: rgb(42, 25, 87);
-  color: white;
-}
-header.darkmode .cbutton:hover {
   --shadow: rgb(22, 22, 22);
 }
 .overflow-header {
@@ -132,9 +137,11 @@ input[type="text"] {
   border: none;
   border-bottom-style: solid;
   color: var(--text);
+  transition: 0.2s ease;
 }
 input[type="text"]:focus {
   outline: none;
+  box-shadow: 0 8px 8px 2px var(--shadow);
 }
 .countrySymbol {
   display: block;
@@ -164,6 +171,19 @@ form button {
 }
 
 /* MIDDLE SECTION */
+.wrap-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 0 10%;
+}
+input[type="range"] {
+  width: 75%;
+}
+
+/* EXTEND BUTTON */
 .wrap-extend {
   width: 100%;
   display: flex;
