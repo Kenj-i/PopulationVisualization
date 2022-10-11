@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { Context } from "./App";
 
 function Header({ setState }) {
     const state = useContext(Context)
     const [countries, setCountries] = useState(null)
     const [year, setYear] = useState(2018)
-    const [firstCountry, setFirstCountry] = useState(null,)
-    const [secondCountry, setSecondCountry] = useState(null)
+    const firstCountryRef = useRef()
+    const secondCountryRef = useRef()
     const [extended, setExtended] = useState(true)
 
     useEffect(() => {
@@ -31,8 +31,8 @@ function Header({ setState }) {
         let firstPopulation
         let secondPopulation
         try {
-            firstPopulation = getPopulation(firstCountry)
-            secondPopulation = getPopulation(secondCountry)
+            firstPopulation = getPopulation(firstCountryRef.current.value)
+            secondPopulation = getPopulation(secondCountryRef.current.value)
         }
         catch (error) {
             console.log(error)
@@ -65,11 +65,11 @@ function Header({ setState }) {
                         <form onSubmit={setPopulation}>
                             <div className="wrap-input">
                                 <span className="countrySymbol first" />
-                                <input required type="text" list="countries" placeholder="First Country..." onChange={e => setFirstCountry(e.target.value)} />
+                                <input required type="text" list="countries" placeholder="First Country..." ref={firstCountryRef} />
                             </div>
                             <div className="wrap-input">
                                 <span className="countrySymbol second" />
-                                <input required type="text" list="countries" placeholder="Second Country..." onChange={e => setSecondCountry(e.target.value)} />                            
+                                <input required type="text" list="countries" placeholder="Second Country..." ref={secondCountryRef} />                            
                             </div>
                             <datalist id="countries">{countries && showOptions()}</datalist>
                             <button className="cbutton"><i className="bi bi-search" /></button>
